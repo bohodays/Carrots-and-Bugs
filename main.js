@@ -3,12 +3,17 @@
 const CARROT_SIZE = 80;
 const CARROT_COUNT = 5;
 const BUG_COUNT = 5;
+const GAME_DURATION_SEC = 5;
 
 const field = document.querySelector('.game__field');
 const fieldRect = field.getBoundingClientRect();
 const gameBtn = document.querySelector('.game__button');
 const gameTimer = document.querySelector('.game__timer');
 const gameScore = document.querySelector('.game__score');
+
+const popUp = document.querySelector('.pop-up');
+const popUpText = document.querySelector('.pop-up__message');
+const popUpRefresh = document.querySelector('.pop-up__refresh');
 
 // 게임의 시작 유무를 판단할 변수
 let started = false;
@@ -42,13 +47,47 @@ function showStopButton() {
   icon.classList.remove('fa-play');
 }
 
+function hideGameButton() {
+  gameBtn.style.visibility = 'hidden';
+}
+
 function showTimerAndScore() {
   gameTimer.style.visibility = 'visible';
   gameScore.style.visibility = 'visible';
 }
 
-function stopGame() {
+function startGameTimer() {
+  // 남은 시간 체킹
+  let remainingTimeSec = GAME_DURATION_SEC;
+  updateTimerText(remainingTimeSec);
+  timer = setInterval(() => {
+    if (remainingTimeSec <= 0) {
+      clearInterval(timer);
+      return;
+    }
+    updateTimerText(--remainingTimeSec);
+  }, 1000)
+}
 
+function updateTimerText(time) {
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+  gameTimer.innerHTML = `${minutes}:${seconds}`;
+}
+
+function stopGame() {
+  stopGameTimer();
+}
+
+function stopGameTimer() {
+  clearInterval(timer);
+  hideGameButton();
+  showPopUpWithText('REPLAY?');
+}
+
+function showPopUpWithText(text) {
+  popUpText.innerText = text;
+  popUp.classList.remove('pop-up--hide');
 }
 
 function initGame() {
