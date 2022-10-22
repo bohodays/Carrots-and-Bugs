@@ -1,9 +1,9 @@
 'use strict';
 
 const CARROT_SIZE = 80;
-const CARROT_COUNT = 5;
-const BUG_COUNT = 5;
-const GAME_DURATION_SEC = 5;
+const CARROT_COUNT = 15;
+const BUG_COUNT = 15;
+const GAME_DURATION_SEC = 20;
 
 const field = document.querySelector('.game__field');
 const fieldRect = field.getBoundingClientRect();
@@ -14,6 +14,14 @@ const gameScore = document.querySelector('.game__score');
 const popUp = document.querySelector('.pop-up');
 const popUpText = document.querySelector('.pop-up__message');
 const popUpRefresh = document.querySelector('.pop-up__refresh');
+
+
+const carrotSound = new Audio('./sound/carrot_pull.mp3');
+const alertSound = new Audio('./sound/alert.wav');
+const bgSound = new Audio('./sound/bg.mp3');
+const bugSound = new Audio('./sound/bug_pull.mp3');
+const winSound = new Audio('./sound/game_win.mp3');
+
 
 // 게임의 시작 유무를 판단할 변수
 let started = false;
@@ -44,13 +52,14 @@ popUpRefresh.addEventListener('click', () => {
   hidePopUp();
 });
 
-
+finish
 function startGame() {
   started = true;
   initGame();
   showStopButton();
   showTimerAndScore();
   startGameTimer();
+  playSound(bgSound);
 }
 
 function stopGame() {
@@ -58,12 +67,20 @@ function stopGame() {
   stopGameTimer();
   hideGameButton();
   showPopUpWithText('REPLAY?');
+  playSound(alertSound);
+  stopSound(bgSound);
 }
 
 function finishGame(win) {
   started = false;
   hideGameButton();
+  if (win) {
+    playSound(winSound);
+  } else {
+    playSound(bugSound);
+  }
   stopGameTimer();
+  stopSound(bgSound);
   showPopUpWithText(win ? 'YOU WIN 🎉' : 'YOU LOST 😥');
 }
 
@@ -121,6 +138,7 @@ function showPopUpWithText(text) {
 }
 
 function initGame() {
+  score = 0;
   field.innerHTML = '';
   gameScore.innerHTML = CARROT_COUNT;
   // 벌레와 당근을 생성한 다음 field에 추가
@@ -137,6 +155,7 @@ function onFieldClick(event) {
     // 당근
     target.remove();
     score++;
+    playSound(carrotSound);
     updateScoreBoard();
     if (score === CARROT_COUNT) {
       finishGame(true);
@@ -147,7 +166,14 @@ function onFieldClick(event) {
   }
 }
 
+function playSound(sound) {
+  sound.currentTime = 0;
+  sound.play();
+}
 
+function stopSound(sound) {
+  sound.pause();
+}
 
 function updateScoreBoard() {
   gameScore.innerText = CARROT_COUNT - score;
