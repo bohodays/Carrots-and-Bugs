@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <!-- defer 옵션을 주지 않으면 html이 준비되지 않은 상태에서 스크립트 파일이 실행되어버린다. -->
-  <script src="main.js" defer></script>
-  <script src="https://kit.fontawesome.com/21a0726bae.js" crossorigin="anonymous"></script>
-  <title>Carrots and Bugs</title>
-</head>
-<body>
-  <section class="game">
-    <header class="game__header">
-      <button class="game__button">
-        <i class="fa-solid fa-play"></i>
-      </button>
-      <span class="game__timer">0:0</span>
-      <span class="game__score">9</span>
-    </header>
-    <section class="game__field"></section>
-  </section>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <!-- defer 옵션을 주지 않으면 html이 준비되지 않은 상태에서 스크립트 파일이 실행되어버린다. -->
+    <script type="module" src="src/main.js" defer></script>
+    <script
+      src="https://kit.fontawesome.com/21a0726bae.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Carrots and Bugs</title>
+  </head>
+  <body>
+    <section class="game">
+      <header class="game__header">
+        <button class="game__button">
+          <i class="fa-solid fa-play"></i>
+        </button>
+        <span class="game__timer">0:0</span>
+        <span class="game__score">9</span>
+      </header>
+      <section class="game__field"></section>
+    </section>
 
-  <section class="pop-up pop-up--hide">
-    <button class="pop-up__refresh">
-      <i class="fa-sharp fa-solid fa-rotate-right"></i>
-    </button>
-    <span class="pop-up__message">Hello</span>
-  </section>
-</body>
+    <section class="pop-up pop-up--hide">
+      <button class="pop-up__refresh">
+        <i class="fa-sharp fa-solid fa-rotate-right"></i>
+      </button>
+      <span class="pop-up__message">Hello</span>
+    </section>
+  </body>
 </html>
