@@ -22,6 +22,6 @@ export default class PopUp {
   }
 
   hide() {
-    this.popUp.classList.add("pop-up-hide");
+    this.popUp.classList.add("pop-up--hide");
   }
 }
